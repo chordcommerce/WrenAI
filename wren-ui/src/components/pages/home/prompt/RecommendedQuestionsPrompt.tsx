@@ -9,6 +9,7 @@ import LoadingOutlined from '@ant-design/icons/LoadingOutlined';
 import { Logo } from '@/components/Logo';
 import { makeIterable } from '@/utils/iteration';
 import { GroupedQuestion } from '@/hooks/useRecommendedQuestionsInstruction';
+import useEmbdeded from '@/hooks/useEmbedded';
 
 const CategorySectionBlock = styled.div`
   background: var(--gray-1);
@@ -112,17 +113,21 @@ export default function RecommendedQuestionsPrompt(props: Props) {
     setSelectedQuestion(payload.question);
   };
 
+  const { isEmbedded } = useEmbdeded();
+
   return (
     <div className="bg-gray-2 px-10 py-6">
-      <div className="d-flex align-center mb-3">
-        <Logo size={24} color="var(--gray-8)" />
-        <div className="text-md text-medium gray-8 mx-3">
-          Know more about your data.
+      {!isEmbedded && (
+        <div className="d-flex align-center mb-3">
+          <Logo size={24} color="var(--gray-8)" />
+          <div className="text-md text-medium gray-8 mx-3">
+            Know more about your data.
+          </div>
+          <div className="text-medium gray-7">
+            Try asking some of the following questions
+          </div>
         </div>
-        <div className="text-medium gray-7">
-          Try asking some of the following questions
-        </div>
-      </div>
+      )}
       <Space
         style={{ width: 680 }}
         className="gray-8"

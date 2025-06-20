@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 import { Button, Typography } from 'antd';
 import { Logo } from '@/components/Logo';
 import { Path } from '@/utils/enum';
-import SiderLayout from '@/components/layouts/SiderLayout';
 import Prompt from '@/components/pages/home/prompt';
 import DemoPrompt from '@/components/pages/home/prompt/DemoPrompt';
 import useHomeSidebar from '@/hooks/useHomeSidebar';
@@ -17,6 +16,7 @@ import {
 } from '@/apollo/client/graphql/home.generated';
 import { useGetSettingsQuery } from '@/apollo/client/graphql/settings.generated';
 import { CreateThreadInput } from '@/apollo/client/graphql/__types__';
+import useEmbdeded from '@/hooks/useEmbedded';
 
 const { Text } = Typography;
 
@@ -131,8 +131,10 @@ export default function Home() {
     }
   };
 
+  const { isEmbedded, DynamicLayout } = useEmbdeded();
+
   return (
-    <SiderLayout loading={false} sidebar={homeSidebar}>
+    <DynamicLayout loading={false} sidebar={homeSidebar}>
       {isSampleDataset && (
         <SampleQuestionsInstruction
           sampleQuestions={sampleQuestions}
@@ -151,6 +153,6 @@ export default function Home() {
         {...askPrompt}
         onCreateResponse={onCreateResponse}
       />
-    </SiderLayout>
+    </DynamicLayout>
   );
 }
